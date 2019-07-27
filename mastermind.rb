@@ -13,7 +13,7 @@ class Board
     @tips = Array.new(12)
     12.times {|r|
       4.times {|l|
-        @board_array[r][l] = '_'
+        @board_array[r][l] = ' '
       }
       @tips[r]  = ''
     }
@@ -22,17 +22,18 @@ class Board
     @game_won = false
   end
 
-  def show
-    puts "┏━┳━┳━┳━┓"
+  def show(display_str='')
+    display_str += "┏━┳━┳━┳━┓\n"
     @board_array.each_with_index{|round, rindex|
       round_string = '┃'
       round.each_with_index{|location, lindex|
         lindex != 3 ? round_string +=  location + '┃'  : round_string += location + '┃'
       }
-      puts '┣━╋━╋━╋━┫' unless rindex.zero?
-      puts round_string + ' ' + @tips[rindex]
+      round_string += "┣━╋━╋━╋━┫\n" unless rindex.zero?
+      display_str += round_string + ' ' + @tips[rindex] + "\n"
     }
-    puts "┗━┻━┻━┻━┛"
+    display_str += "┗━┻━┻━┻━┛\n"
+    puts display_str
 
   end
 
@@ -108,7 +109,7 @@ class Board
         return false
       end
     end
-    return true
+    true
   end
 
 
@@ -138,8 +139,7 @@ class Board
       if player_answer == @colors_chars.join()
         @game_won = true
         break
-      end
-      if @round == 12
+      elsif @round == 12
         self.show
         @game_won = false
         break
@@ -154,12 +154,13 @@ class Board
           else
             @tip[j] = 'X'
             j += 1
+          end
         end
-      end
       }
       @tips[@round-1] = @tip.sort.join()
 
     end
+    
     if @game_won == true
       puts 'You Won!'
       puts 'Colors Was:'
