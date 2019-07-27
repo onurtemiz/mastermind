@@ -23,15 +23,16 @@ class Board
   end
 
   def show
-    puts "========="
+    puts "┏━┳━┳━┳━┓"
     @board_array.each_with_index{|round, rindex|
-      round_string = '*'
+      round_string = '┃'
       round.each_with_index{|location, lindex|
-        lindex != 3 ? round_string +=  location + '.'  : round_string += location + '*'
+        lindex != 3 ? round_string +=  location + '┃'  : round_string += location + '┃'
       }
+      puts '┣━╋━╋━╋━┫' unless rindex.zero?
       puts round_string + ' ' + @tips[rindex]
     }
-    puts "========="
+    puts "┗━┻━┻━┻━┛"
 
   end
 
